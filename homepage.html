@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build a Movie Platform Interface</title>
+    <link rel="stylesheet" href="./hompage.css">
+</head>
+<body>
+    <h1>Homepage</h1>
+    <input type="text" id="search" placeholder="Search a movie Name here..">
+    <select name="filter by" id="filter">
+        <option value="Rating">Rating</option>
+        <option value="Release Date">Release Date</option>
+        <option value="Genre">Genre</option>
+    </select>
+    <select name="sort by rating" id="sort by rating">
+        <option value="lth">lower to higher</option>
+        <option value="htl">higher to lower</option>
+           </select>
+           <select name="sort by release Date" id="sort by release Date">
+            <option value="otn">older to newer</option>
+            <option value="nto">newer to older</option>
+               </select>
+    
+    <ul id="pagination"></ul>
+    <div id="container"></div>
+    <img src="" alt="">
+</body>
+</html>
+<script>
+    let response=[];
+
+    async function fetchMovies() {
+        try {
+            let resp=await fetch("https://buildmoviepageudayasarankumar-default-rtdb.firebaseio.com/movies.json");
+             response=await resp.json();
+            response=[...response];
+            console.log(response);
+            displaypages(response);
+            diplayMovies(response);
+            
+        } catch (error) {
+            console.log(error);
+            alert("error fetching data..Please Try again later");
+        }
+    }
+    function diplayMovies(arr){
+        let post;
+        //post.innerHTML="";
+        let cont=document.getElementById('container');
+        arr.forEach(element => {
+            let [title,genre,release_date,rating,thumbnail_url,director,Cast,duration,tags]=Object.entries(element);
+         post=document.createElement("div")       
+        post.innerHTML=(`
+       <h2>Title:${element.title}</h2>
+        <h3>Genre:${element.genre}</h3>
+        <p>Release Date:${element.release_date}</p>
+        <p>Rating:${element.rating}</p>
+        <img src="${element.thumbnail_url}" alt="${element.title}">
+        <button>Add to favourites</button>
+        <button>Add comment</button>
+        <button>Add rating</button>
+        ` );
+        cont.append(post);
+    //     post.addEventListener("click",alert(
+    //         ` Title: ${element.title}
+    //         Director:${element.director}
+    //         Cast:${element.Cast}
+    //         Duration:${element.duration} minutes
+    //         Release Date:${element.release_date}
+    //         Rating:${element.rating}
+    //         Tags:${element.tags}
+    //         `)
+    // )
+        
+       // post.setAttribute("class",'post');
+        });  
+    }
+ 
+   
+    function displaypages(arr){
+        let page;
+        let postperpage=Math.ceil(arr.length/10);
+        let startindex=1,endindex=postperpage;
+        let pages=document.getElementById('pagination')
+        for(let i=0;i<postperpage;i++){
+             page=document.createElement("li");
+            page.innerText=i+1;
+            
+            pages.appendChild(page);
+        //     page.addEventListener('click'function(){
+        // diplayMovies( arr.slice(i*startindex,i*startindex+endindex));
+        // });
+        }
+        
+    }
+    
+fetchMovies();
+</script>
+

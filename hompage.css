@@ -1,0 +1,40 @@
+#pagination{
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#pagination > li{
+    border: 1px solid blue;
+    border-radius: 5px;
+    list-style-type: none;
+    background-color: brown;
+    padding: 10px;
+}
+#pagination > li:hover{
+    background-color: blue;
+    cursor: pointer;
+}
+body{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+#container{
+    display: grid;
+    grid-template-columns: repeat(4,2fr);
+    gap: 20px;
+    padding: 20px;
+}
+#container > div{
+    height: max-content;
+    width: 200px;
+    border-radius: 10px;
+    border: 1px solid black;
+    text-align: center;
+    border-style: double;
+    padding: 10px;
+    line-height-step: 2px;
+}
